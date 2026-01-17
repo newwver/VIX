@@ -61,7 +61,8 @@
                 <div class="space-y-6">
                     <div>
                         <label for="birthdate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">생년월일</label>
-                        <input type="date" id="birthdate" name="birthdate" class="w-full p-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                        <input type="date" id="birthdate" name="birthdate"
+                               class="w-full p-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">투자 성향</label>
@@ -82,16 +83,54 @@
 
             <!-- Result Section (Initially Hidden) -->
             <section id="result-section" class="hidden">
-                <div id="result-card" class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl">
-                    <div class="flex justify-center items-center gap-3 mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-yellow-400">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.475 2.118 2.25 2.25 0 0 1-2.475-2.118c0-.497.158-.957.44-1.344a3 3 0 0 0-1.128-5.78c-.497 0-.957.158-1.344.44a2.25 2.25 0 0 1-2.118-2.475c0-1.217.983-2.199 2.199-2.199.497 0 .957-.158 1.344-.44a3 3 0 0 0 5.78-1.128c0-.497-.158-.957-.44-1.344a2.25 2.25 0 0 1 2.118-2.475 2.25 2.25 0 0 1 2.475 2.118c0 .497-.158.957-.44 1.344a3 3 0 0 0 1.128 5.78c.497 0 .957-.158 1.344-.44a2.25 2.25 0 0 1 2.118 2.475c0 1.217-.983 2.199-2.199 2.199-.497 0-.957.158-1.344.44a3 3 0 0 0-5.78 1.128Z" />
-                        </svg>
-                        <h2 class="text-2xl font-bold text-center">오늘의 투자 태도</h2>
+                <div id="result-card" class="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl shadow-2xl border border-gray-700">
+                    
+                    <div class="text-center mb-8">
+                        <h2 class="text-xl font-bold text-yellow-300 mb-2">오늘의 투자 지수</h2>
+                        <p id="total-score" class="text-7xl font-extrabold text-white">0</p>
                     </div>
-                    <div class="text-center">
-                        <p id="result-attitude" class="text-4xl font-extrabold mb-2"></p>
-                        <p id="result-message" class="text-gray-600 dark:text-gray-300"></p>
+
+                    <div class="space-y-6 mb-8">
+                        <!-- 세부 분석 섹션 -->
+                        <h3 class="text-lg font-semibold text-center text-gray-300 border-t border-b border-gray-700 py-2">세부 분석</h3>
+                        
+                        <!-- 시장 분석 -->
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-blue-900/50 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-blue-400"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" /></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-blue-400">시장 분석</h4>
+                                <p id="market-analysis" class="text-gray-300">현재 나스닥은 약간의 불안감 속에서 기회를 엿보고 있습니다.</p>
+                            </div>
+                        </div>
+
+                        <!-- 운명 분석 -->
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-purple-900/50 rounded-lg">
+                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-purple-400"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.475 2.118 2.25 2.25 0 0 1-2.475-2.118c0-.497.158-.957.44-1.344a3 3 0 0 0-1.128-5.78c-.497 0-.957.158-1.344.44a2.25 2.25 0 0 1-2.118-2.475c0-1.217.983-2.199 2.199-2.199.497 0 .957-.158 1.344-.44a3 3 0 0 0 5.78-1.128c0-.497-.158-.957-.44-1.344a2.25 2.25 0 0 1 2.118-2.475 2.25 2.25 0 0 1 2.475 2.118c0 .497-.158.957-.44 1.344a3 3 0 0 0 1.128 5.78c.497 0 .957-.158 1.344-.44a2.25 2.25 0 0 1 2.118 2.475c0 1.217-.983 2.199-2.199 2.199-.497 0-.957.158-1.344.44a3 3 0 0 0-5.78 1.128Z" /></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-purple-400">운명 분석</h4>
+                                <p id="destiny-analysis" class="text-gray-300">별들의 기운이 당신의 직관력을 높여주는 날입니다. 내면의 목소리에 귀 기울이세요.</p>
+                            </div>
+                        </div>
+
+                        <!-- 행운의 아이템 -->
+                        <div class="flex items-start gap-4">
+                             <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-amber-900/50 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-amber-400"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-amber-400">행운의 아이템</h4>
+                                <p id="luck-analysis" class="text-gray-300">오늘의 행운 색상은 '골드'입니다. 금색 아이템을 착용하거나, 오후 3시에 중요한 결정을 내리세요.</p>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- Action Buttons -->
+                    <div class="flex flex-col md:flex-row gap-4 mt-8">
+                        <button id="notify-btn" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105">내일 운세 알림 받기</button>
+                        <button id="share-btn" class="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105">결과 공유하기</button>
                     </div>
                 </div>
             </section>
