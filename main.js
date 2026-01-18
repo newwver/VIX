@@ -567,6 +567,24 @@ document.addEventListener('DOMContentLoaded', () => {
     retryBtn.addEventListener('click', reset);
     closeBtn.addEventListener('click', reset);
 
+    // Add new event listeners here for satisfaction survey buttons
+    const surveyYesBtn = document.getElementById('survey-yes');
+    const surveyNoBtn = document.getElementById('survey-no');
+
+    if (surveyYesBtn) {
+        surveyYesBtn.addEventListener('click', () => {
+            console.log('Satisfaction Survey: Yes, comforted!');
+            // Add logic here for sending data or further interaction
+        });
+    }
+
+    if (surveyNoBtn) {
+        surveyNoBtn.addEventListener('click', () => {
+            console.log('Satisfaction Survey: Still unsure.');
+            // Add logic here for sending data or further interaction
+        });
+    }
+
     langButtons.forEach(button => {
         button.addEventListener('click', () => {
             setLanguage(button.dataset.lang);
