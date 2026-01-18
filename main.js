@@ -1,3 +1,16 @@
+const API_KEY = 'YOUR_API_KEY'; // Replace with your actual Google Maps API key
+
+// Global variable for the map and PlacesService
+let map;
+let placesService;
+let userLocation; // To store user's current latitude and longitude
+
+// This function is called when the Google Maps API script loads
+function initMap() {
+    console.log("Google Maps API loaded. Initializing PlacesService.");
+    placesService = new google.maps.places.PlacesService(document.createElement('div')); // Service needs a div to attach to
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- Translations ---
     const translations = {
@@ -101,7 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
             fallback_author: "누군가의 지혜",
             fallback_deepening: "어떤 선택을 하든, 당신의 길은 가치가 있습니다. 이 길의 끝에서 또 다른 길이 당신을 기다리고 있을 것입니다.",
             fallback_closing: "스스로를 믿고 나아가세요.",
-            fallback_mission: "하늘을 보며 크게 심호흡을 세 번 해보세요."
+            fallback_mission: "하늘을 보며 크게 심호흡을 세 번 해보세요。",
+            nearbyClinics: "내 주변 마음 건강 시설"
 
         },
         en: {
@@ -204,11 +218,19 @@ document.addEventListener('DOMContentLoaded', () => {
             fallback_author: "Someone's Wisdom",
             fallback_deepening: "No matter what choice you make, your path is valuable. At the end of this path, another path will be waiting for you.",
             fallback_closing: "Believe in yourself and move forward.",
-            fallback_mission: "Look at the sky and take three deep breaths."
+            fallback_mission: "Look at the sky and take three deep breaths.",
+            nearbyClinics: "Nearby Mental Health Facilities"
         }
     };
 
     let currentLang = localStorage.getItem('lang') || 'ko'; // Default to Korean
+
+    const emotionKeywords = {
+        anxious: '불안장애 정신과',
+        empty: '심리상담소',
+        powerless: '심리상담소', // Assuming similar to emptiness
+        sadness: '정신건강의학과' // Assuming requires more formal help
+    };
 
     function getTranslation(key, lang = currentLang) {
         return translations[lang][key] || translations['ko'][key] || `MISSING_TRANSLATION[${key}]`;
@@ -267,6 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingSpinner = document.getElementById('loading-spinner');
     const submitBtn = document.getElementById('submit-btn');
     const langButtons = document.querySelectorAll('.lang-btn');
+    const satisfactionSurvey = document.querySelector('.satisfaction-survey');
 
     const questionSteps = {
         1: document.getElementById('question-1'),
@@ -519,6 +542,11 @@ document.addEventListener('DOMContentLoaded', () => {
             displayWisdomTicket(wisdom); // Use the new function to display
             loadingSpinner.classList.add('hidden');
             resultOverlay.style.display = 'flex';
+
+            // After displaying wisdom, find nearby clinics
+            const emotionKeyForClinic = userSelections.emotion[0] || 'empty';
+            findNearbyClinics(emotionKeyForClinic);
+
         }, 50);
     }
 
@@ -540,7 +568,121 @@ document.addEventListener('DOMContentLoaded', () => {
         userSelections.emotion = [];
         userSelections.cause = [];
         userSelections.need = [];
-        submitBtn.classList.add('hidden'); 
+        submitBtn.classList.add('hidden');
+
+        // Hide map and clinic list on reset
+        document.getElementById('map-container').style.display = 'none';
+        document.getElementById('clinic-list').style.display = 'none';
+        document.getElementById('clinic-items').innerHTML = '';
+        if (map) { // Clear map if it was initialized
+            map = null;
+        }
+        satisfactionSurvey.style.display = 'none'; // Hide satisfaction survey
+    }
+
+    // --- Functions for Nearby Clinics ---
+    function findNearbyClinics(emotionKey) {
+        const mapContainer = document.getElementById('map-container');
+        const clinicListContainer = document.getElementById('clinic-list');
+        const clinicItemsUl = document.getElementById('clinic-items');
+
+        mapContainer.style.display = 'none';
+        clinicListContainer.style.display = 'none';
+        clinicItemsUl.innerHTML = ''; // Clear previous results
+
+        if (!navigator.geolocation) {
+            console.warn("Geolocation is not supported by your browser.");
+            // Optionally display a message to the user
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                userLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                console.log("User location:", userLocation);
+                performPlacesSearch(emotionKey, userLocation);
+            },
+            (error) => {
+                console.error("Error getting user location:", error);
+                // Optionally display a message to the user that location services are needed
+            },
+            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+        );
+    }
+
+    function performPlacesSearch(emotionKey, location) {
+        if (!placesService) {
+            console.error("Google PlacesService not initialized.");
+            return;
+        }
+
+        const searchKeyword = emotionKeywords[emotionKey];
+        if (!searchKeyword) {
+            console.warn(`No search keyword defined for emotion: ${emotionKey}`);
+            return;
+        }
+
+        const request = {
+            location: new google.maps.LatLng(location.lat, location.lng),
+            radius: 5000, // 5km radius
+            keyword: searchKeyword,
+            type: ['health', 'point_of_interest'] // Broad types, can be refined
+        };
+
+        placesService.nearbySearch(request, (results, status) => {
+            const mapContainer = document.getElementById('map-container');
+            const clinicListContainer = document.getElementById('clinic-list');
+            const clinicItemsUl = document.getElementById('clinic-items');
+
+            if (status === google.maps.places.PlacesServiceStatus.OK && results && results.length > 0) {
+                mapContainer.style.display = 'block';
+                clinicListContainer.style.display = 'block';
+
+                map = new google.maps.Map(mapContainer, {
+                    center: location,
+                    zoom: 13, // Adjust zoom level as needed
+                });
+
+                // Prioritize results based on keyword match in name
+                const sortedResults = results.sort((a, b) => {
+                    const nameA = a.name.toLowerCase();
+                    const nameB = b.name.toLowerCase();
+                    const keywordLower = searchKeyword.toLowerCase();
+
+                    const aHasKeyword = nameA.includes(keywordLower);
+                    const bHasKeyword = nameB.includes(keywordLower);
+
+                    if (aHasKeyword && !bHasKeyword) return -1;
+                    if (!aHasKeyword && bHasKeyword) return 1;
+                    return 0; // Maintain original order if both/neither have keyword
+                });
+
+                sortedResults.forEach(place => {
+                    if (!place.geometry || !place.geometry.location) return;
+
+                    new google.maps.Marker({
+                        map: map,
+                        position: place.geometry.location,
+                        title: place.name
+                    });
+
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name)}&query_place_id=${place.place_id}`;
+                    link.target = '_blank';
+                    link.textContent = place.name;
+                    listItem.appendChild(link);
+                    clinicItemsUl.appendChild(listItem);
+                });
+            } else {
+                console.warn("Places search failed or no results found:", status);
+                mapContainer.style.display = 'none';
+                clinicListContainer.style.display = 'none';
+            }
+        });
     }
 
     // --- Event Listeners ---
@@ -561,11 +703,16 @@ document.addEventListener('DOMContentLoaded', () => {
             link.download = filename;
             link.href = canvas.toDataURL('image/png');
             link.click();
+            satisfactionSurvey.style.display = 'block'; // Show survey after saving
         });
     });
 
-    retryBtn.addEventListener('click', reset);
-    closeBtn.addEventListener('click', reset);
+    retryBtn.addEventListener('click', () => {
+        satisfactionSurvey.style.display = 'block'; // Show survey on retry
+    });
+    closeBtn.addEventListener('click', () => {
+        satisfactionSurvey.style.display = 'block'; // Show survey on close
+    });
 
     // Add new event listeners here for satisfaction survey buttons
     const surveyYesBtn = document.getElementById('survey-yes');
@@ -574,14 +721,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (surveyYesBtn) {
         surveyYesBtn.addEventListener('click', () => {
             console.log('Satisfaction Survey: Yes, comforted!');
-            // Add logic here for sending data or further interaction
+            satisfactionSurvey.style.display = 'none'; // Hide survey
+            reset(); // Reset the app
         });
     }
 
     if (surveyNoBtn) {
         surveyNoBtn.addEventListener('click', () => {
             console.log('Satisfaction Survey: Still unsure.');
-            // Add logic here for sending data or further interaction
+            satisfactionSurvey.style.display = 'none'; // Hide survey
+            reset(); // Reset the app
         });
     }
 
