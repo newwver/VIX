@@ -1,16 +1,3 @@
-const API_KEY = 'YOUR_API_KEY'; // Replace with your actual Google Maps API key
-
-// Global variable for the map and PlacesService
-let map;
-let placesService;
-let userLocation; // To store user's current latitude and longitude
-
-// This function is called when the Google Maps API script loads
-function initMap() {
-    console.log("Google Maps API loaded. Initializing PlacesService.");
-    placesService = new google.maps.places.PlacesService(document.createElement('div')); // Service needs a div to attach to
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     // --- Translations ---
     const translations = {
@@ -115,10 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fallback_deepening: "어떤 선택을 하든, 당신의 길은 가치가 있습니다. 이 길의 끝에서 또 다른 길이 당신을 기다리고 있을 것입니다.",
             fallback_closing: "스스로를 믿고 나아가세요.",
             fallback_mission: "하늘을 보며 크게 심호흡을 세 번 해보세요。",
-            nearbyClinics: "내 주변 마음 건강 시설",
-            geolocationDenied: "정신건강 시설 추천을 위해 위치 접근을 허용해주세요.",
-            noClinicsFound: "죄송합니다. 주변에서 적합한 정신건강 시설을 찾을 수 없습니다。",
-            naverMapLinkMessage: "당신의 고민이 깊은 것은 그만큼 삶을 소중히 여기고 있다는 증거일 거예요.",
+            naverMapLinkMessage: "당신의 고민이 깊은 것은 그만큼 삶을 소중히 여기고 있다는 증거일 거예요。",
             naverMapLinkMessage2: "문장 너머의 더 깊은 치유가 필요하다면, 당신의 곁에서 직접 이야기를 들어줄 전문가를 찾아보는 건 어떨까요?",
             findExpertsNaverMap: "네이버 지도에서 전문가 찾기"
 
@@ -224,9 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fallback_deepening: "No matter what choice you make, your path is valuable. At the end of this path, another path will be waiting for you.",
             fallback_closing: "Believe in yourself and move forward.",
             fallback_mission: "Look at the sky and take three deep breaths.",
-            nearbyClinics: "Nearby Mental Health Facilities",
-            geolocationDenied: "Please allow location access to recommend mental health facilities.",
-            noClinicsFound: "Sorry, no suitable mental health facilities found nearby."
+            naverMapLinkMessage: "The depth of your worries is proof of how much you cherish life.",
         }
     };
 
@@ -297,7 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submit-btn');
     const langButtons = document.querySelectorAll('.lang-btn');
     const satisfactionSurvey = document.querySelector('.satisfaction-survey');
-    const clinicMessageDiv = document.getElementById('clinic-message');
     const naverMapLinkContainer = document.getElementById('naver-map-link-container');
     const naverMapLink = document.getElementById('naver-map-link');
 
@@ -555,7 +536,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // After displaying wisdom, find nearby clinics
             const emotionKeyForClinic = userSelections.emotion[0] || 'empty';
-            findNearbyClinics(emotionKeyForClinic);
             displayNaverMapLink(emotionKeyForClinic); // Display Naver Map link
 
         }, 50);
@@ -581,178 +561,9 @@ document.addEventListener('DOMContentLoaded', () => {
         userSelections.need = [];
         submitBtn.classList.add('hidden');
 
-        // Hide map and clinic list on reset
-        document.getElementById('map-container').style.display = 'none';
-        document.getElementById('clinic-list').style.display = 'none';
-        document.getElementById('clinic-items').innerHTML = '';
-        if (map) { // Clear map if it was initialized
-            map = null;
-        }
         satisfactionSurvey.style.display = 'none'; // Hide satisfaction survey
-        clinicMessageDiv.style.display = 'none'; // Hide clinic message
-        clinicMessageDiv.textContent = ''; // Clear clinic message
         naverMapLinkContainer.style.display = 'none'; // Hide Naver Map link container
         naverMapLink.href = '#'; // Reset Naver Map link
-    }
-
-    // --- Functions for Nearby Clinics ---
-    function findNearbyClinics(emotionKey) {
-        const mapContainer = document.getElementById('map-container');
-        const clinicListContainer = document.getElementById('clinic-list');
-        const clinicItemsUl = document.getElementById('clinic-items');
-
-        mapContainer.style.display = 'none';
-        clinicListContainer.style.display = 'none';
-        clinicItemsUl.innerHTML = ''; // Clear previous results
-        clinicMessageDiv.style.display = 'none'; // Hide message initially
-        clinicMessageDiv.textContent = ''; // Clear message initially
-
-        if (!navigator.geolocation) {
-            console.warn("Geolocation is not supported by your browser.");
-            clinicMessageDiv.textContent = getTranslation('geolocationDenied');
-            clinicMessageDiv.style.display = 'block';
-            return;
-        }
-
-        if (typeof google === 'undefined' || typeof google.maps === 'undefined' || !placesService) {
-            console.warn("Google Maps API or PlacesService not fully loaded/initialized yet.");
-            clinicMessageDiv.textContent = "Google 지도 서비스를 로드하는 데 문제가 발생했습니다. 잠시 후 다시 시도해주세요."; // Specific message
-            clinicMessageDiv.style.display = 'block';
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                userLocation = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                console.log("User location:", userLocation);
-                performPlacesSearch(emotionKey, userLocation);
-            },
-            (error) => {
-                console.error("Error getting user location:", error);
-                let message = getTranslation('geolocationDenied');
-                if (error.code === error.PERMISSION_DENIED) {
-                    message = getTranslation('geolocationDenied'); // Use specific translation
-                } else if (error.code === error.POSITION_UNAVAILABLE) {
-                    message = "위치 정보를 가져올 수 없습니다. 장치 설정을 확인해주세요.";
-                } else if (error.code === error.TIMEOUT) {
-                    message = "위치 정보를 가져오는 데 시간이 초과되었습니다. 다시 시도해주세요.";
-                }
-                clinicMessageDiv.textContent = message;
-                clinicMessageDiv.style.display = 'block';
-            },
-            { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 } // Increased timeout
-        );
-    }
-
-    function performPlacesSearch(emotionKey, location) {
-        if (!placesService) {
-            console.error("Google PlacesService not initialized.");
-            return;
-        }
-
-        const searchKeyword = emotionKeywords[emotionKey];
-        if (!searchKeyword) {
-            console.warn(`No search keyword defined for emotion: ${emotionKey}`);
-            return;
-        }
-
-        const request = {
-            location: new google.maps.LatLng(location.lat, location.lng),
-            radius: 5000, // 5km radius
-            keyword: searchKeyword,
-            type: ['health', 'point_of_interest'] // Broad types, can be refined
-        };
-
-        placesService.nearbySearch(request, (results, status) => {
-            const mapContainer = document.getElementById('map-container');
-            const clinicListContainer = document.getElementById('clinic-list');
-            const clinicItemsUl = document.getElementById('clinic-items');
-
-            if (status === google.maps.places.PlacesServiceStatus.OK && results && results.length > 0) {
-                mapContainer.style.display = 'block';
-                clinicListContainer.style.display = 'block';
-
-                map = new google.maps.Map(mapContainer, {
-                    center: location,
-                    zoom: 13, // Adjust zoom level as needed
-                });
-
-                // Prioritize results based on keyword match in name
-                const sortedResults = results.sort((a, b) => {
-                    const nameA = a.name.toLowerCase();
-                    const nameB = b.name.toLowerCase();
-                    const keywordLower = searchKeyword.toLowerCase();
-
-                    const aHasKeyword = nameA.includes(keywordLower);
-                    const bHasKeyword = nameB.includes(keywordLower);
-
-                    if (aHasKeyword && !bHasKeyword) return -1;
-                    if (!aHasKeyword && bHasKeyword) return 1;
-                    return 0; // Maintain original order if both/neither have keyword
-                });
-
-                sortedResults.forEach(place => {
-                    if (!place.geometry || !place.geometry.location) return;
-
-                    new google.maps.Marker({
-                        map: map,
-                        position: place.geometry.location,
-                        title: place.name
-                    });
-
-                    const listItem = document.createElement('li');
-                    const link = document.createElement('a');
-                    link.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name)}&query_place_id=${place.place_id}`;
-                    link.target = '_blank';
-                    
-                    const nameParts = place.name.split(new RegExp(`(${searchKeyword})`, 'gi'));
-                    nameParts.forEach(part => {
-                        if (part.toLowerCase() === searchKeyword.toLowerCase()) {
-                            const span = document.createElement('span');
-                            span.classList.add('highlight-keyword');
-                            span.textContent = part;
-                            link.appendChild(span);
-                        } else {
-                            link.appendChild(document.createTextNode(part));
-                        }
-                    });
-                    
-                    listItem.appendChild(link);
-                    clinicItemsUl.appendChild(listItem);
-                });
-            } else {
-                console.warn("Places search failed or no results found:", status);
-                mapContainer.style.display = 'none';
-                clinicListContainer.style.display = 'none';
-                clinicMessageDiv.textContent = getTranslation('noClinicsFound');
-                clinicMessageDiv.style.display = 'block';
-            }
-        });
-    }
-
-    // --- Functions for Naver Map Link ---
-    function displayNaverMapLink(emotionKey) {
-        if (!naverMapLinkContainer || !naverMapLink) {
-            console.error("Naver Map link elements not found.");
-            return;
-        }
-
-        const searchKeyword = emotionKeywords[emotionKey];
-        if (!searchKeyword) {
-            console.warn(`No search keyword defined for emotion: ${emotionKey}`);
-            naverMapLinkContainer.style.display = 'none';
-            return;
-        }
-
-        // Construct Naver Map search URL
-        // Example: https://map.naver.com/v5/search/${keyword}
-        const naverSearchUrl = `https://map.naver.com/v5/search/${encodeURIComponent(searchKeyword)}`;
-        
-        naverMapLink.href = naverSearchUrl;
-        naverMapLinkContainer.style.display = 'block';
     }
 
     // --- Event Listeners ---
