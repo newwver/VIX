@@ -565,3 +565,80 @@ body {
     border-color: var(--highlight-color);
     font-weight: bold;
 }
+
+/* Satisfaction Survey Styles */
+.satisfaction-survey {
+    background-color: #f0f0e8; /* Lighter background to stand out */
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    text-align: center;
+    border: 1px solid #e9e2d1;
+}
+
+.survey-question {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #3d3d3d;
+    margin-bottom: 15px;
+}
+
+.survey-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.survey-btn {
+    padding: 12px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: var(--font-family-sans);
+    font-size: 0.95rem;
+    font-weight: bold;
+    transition: all 0.2s;
+    border: none; /* Resetting default border from ticket-actions button */
+}
+
+#survey-yes {
+    background-color: var(--highlight-color);
+    color: #1c1c1c;
+}
+
+#survey-yes:hover {
+    background-color: #e08a00; /* Slightly darker highlight */
+}
+
+#survey-no {
+    background-color: #dcd1b8;
+    color: #555;
+}
+
+#survey-no:hover {
+    background-color: #c9c1ac; /* Slightly darker grey */
+}
+
+/* Ensure map container has its own styling */
+#map-container {
+    background-color: #e9e2d1; /* Placeholder background */
+}
+
+/* Style for clinic list items */
+#clinic-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+#clinic-list li {
+    margin-bottom: 8px;
+}
+
+#clinic-list li a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#clinic-list li a:hover {
+    text-decoration: underline;
+}
