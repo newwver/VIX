@@ -135,14 +135,21 @@
                                             <button class="survey-btn" id="survey-no">아직은 잘 모르겠어요</button>
                                         </div>
                                     </div>
+                                    <div id="clinic-message" style="margin-top: 20px; text-align: center; color: #555; font-style: italic; display: none;"></div>
                                     <div id="map-container" style="width: 100%; height: 250px; margin-top: 20px; border-radius: 8px; overflow: hidden; display: none;"></div>
                                     <div id="clinic-list" style="margin-top: 15px; max-height: 150px; overflow-y: auto; display: none;">
                                         <p style="font-weight: bold; margin-bottom: 10px;" data-key="nearbyClinics">내 주변 마음 건강 시설</p>
                                         <ul id="clinic-items" style="list-style: none; padding: 0;"></ul>
                                     </div>
+                                    <div id="naver-map-link-container" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e9e2d1; text-align: center; display: none;">
+                                        <p data-key="naverMapLinkMessage" style="font-size: 1rem; color: #3c3c3c; margin-bottom: 10px;"></p>
+                                        <p data-key="naverMapLinkMessage2" style="font-size: 1rem; color: #3c3c3c; margin-bottom: 15px;"></p>
+                                        <a id="naver-map-link" href="#" target="_blank" class="next-btn" style="text-decoration: none; display: inline-block;">
+                                            <span data-key="findExpertsNaverMap">네이버 지도에서 전문가 찾기</span>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="ticket-actions">
-                                    <button id="save-btn" data-key="saveImage">이미지로 저장하기</button>
+                                <div class="ticket-actions">                                    <button id="save-btn" data-key="saveImage">이미지로 저장하기</button>
                                     <button id="retry-btn" data-key="retry">다시 찾기</button>                </div>
                 <button class="close-btn">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
