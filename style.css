@@ -1,0 +1,534 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Noto+Serif+KR:wght@400;600;700&display=swap');
+
+:root {
+    --bg-color: #0d0c1d;
+    --primary-color: #e94560;
+    --secondary-color: #16213e;
+    --highlight-color: #fca311;
+    --text-color: #e0e0e0;
+    --warm-glow: #ffc93c;
+    --font-family-sans: 'Noto Sans KR', sans-serif;
+    --font-family-serif: 'Noto Serif KR', serif;
+}
+
+/* Keyframe Animations */
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slide-down {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes brighten {
+    from { opacity: 0; box-shadow: 0 8px 20px rgba(252, 163, 17, 0.0); }
+    to { opacity: 1; box-shadow: 0 8px 20px rgba(252, 163, 17, 0.3); }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-sans); /* Default to Noto Sans KR */
+    background: radial-gradient(circle, #3a3854 0%, var(--bg-color) 70%);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    text-align: center;
+}
+
+.app-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center main content vertically */
+    align-items: center; /* Center main content horizontally */
+    padding: 20px;
+}
+
+.gacha-container {
+    flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    padding: 0 20px;
+    gap: 40px; /* Space between title/tagline and questions */
+}
+
+.hidden {
+    display: none;
+}
+
+.title {
+    font-weight: 300; /* Lighter font weight */
+    color: #fff;
+    font-size: clamp(2rem, 6vw, 3.5rem); /* Larger and more responsive */
+    margin-bottom: 10px; /* Space from tagline */
+    opacity: 0; /* Initial state for animation */
+    animation: fade-in 1s ease-out forwards;
+    word-break: keep-all;
+    font-family: var(--font-family-serif); /* Serif for main title */
+}
+
+.tagline {
+    font-size: clamp(0.9rem, 3vw, 1.2rem);
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 40px; /* Space from question container */
+    opacity: 0; /* Initial state for animation */
+    animation: slide-down 0.8s ease-out forwards;
+    animation-delay: 1.5s;
+    word-break: keep-all;
+}
+
+.question-container {
+    width: 100%;
+}
+
+.question-step {
+    opacity: 0;
+    animation: fade-in 0.8s ease-out forwards;
+}
+
+.question-title {
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 40px;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    max-width: 600px;
+    width: 100%;
+    margin: auto;
+}
+
+.option-btn {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.option-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.option-btn.selected {
+    background-color: var(--highlight-color);
+    color: #1c1c1c;
+    border-color: var(--highlight-color);
+    font-weight: 600;
+}
+
+.next-btn {
+    background: linear-gradient(45deg, var(--highlight-color), #ff8a00);
+    color: #3d3d3d;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    margin-top: 40px;
+    opacity: 0;
+    animation: fade-in 0.5s forwards;
+}
+
+.next-btn:active {
+    transform: translateY(2px);
+}
+
+
+.loading-spinner {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top-color: var(--highlight-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Result Ticket styles */
+.result-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    display: none; /* Initially hidden */
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(5px);
+    padding: 20px;
+    overflow: auto;
+}
+
+.result-ticket {
+    background-color: #fdfaf4;
+    color: #3d3d3d;
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 8px; /* Slightly rounded corners */
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+    text-align: left;
+    font-family: var(--font-family-serif); /* Elegant Serif font */
+    position: relative;
+    margin: auto;
+    border-top: 8px solid var(--primary-color); /* Primary color border */
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    z-index: 10;
+    padding: 5px;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg);
+}
+
+.close-btn svg path {
+    stroke: #888; /* Default color for SVG paths */
+    transition: stroke 0.2s ease-in-out;
+}
+
+.close-btn:hover svg path {
+    stroke: #3d3d3d; /* Darker color on hover */
+}
+
+.ticket-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Remove default gap */
+    padding-top: 20px; /* Space from top for close button */
+    padding-bottom: 20px;
+}
+
+.wisdom-intro {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #3c3c3c;
+    margin-bottom: 30px;
+    word-break: keep-all;
+}
+
+.wisdom-text-main {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #2c2c2c;
+    word-break: keep-all;
+    font-family: var(--font-family-serif);
+}
+
+.wisdom-author-main {
+    font-size: 1.1rem;
+    font-style: italic;
+    text-align: right;
+    color: #6a6a6a;
+    margin-bottom: 20px;
+    padding-right: 10px;
+}
+
+.wisdom-commentary-main {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 20px;
+    padding: 0 10px; /* Indent slightly */
+    word-break: keep-all;
+}
+
+.wisdom-closing {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #3c3c3c;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.mission-text-main {
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.6;
+    color: #2c2c2c;
+    background-color: #f0f0e8;
+    padding: 15px 20px;
+    border-radius: 6px;
+}
+
+
+.ticket-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 10px; /* More space */
+    padding-top: 25px;
+    border-top: 1px solid #e9e2d1;
+}
+
+.ticket-actions button {
+    flex-grow: 1;
+    padding: 14px 10px;
+    border: 1px solid #dcd1b8;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: var(--font-family-sans);
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+#save-btn {
+    background-color: #3d3d3d;
+    color: #fff;
+    border-color: #3d3d3d;
+}
+
+#save-btn:hover {
+    background-color: #000;
+}
+
+#retry-btn {
+    background-color: transparent;
+    color: #555;
+}
+
+#retry-btn:hover {
+    background-color: #f5f0e4;
+    border-color: #c9c1ac;
+}
+
+/* Particle styles */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 200;
+}
+
+.particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--highlight-color);
+    border-radius: 50%;
+    animation: explode 700ms ease-out forwards;
+}
+
+@keyframes explode {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--x), var(--y)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Media Queries for Responsiveness */
+@media (min-width: 768px) {
+    .app-container {
+        justify-content: space-evenly; /* Evenly space content vertically */
+    }
+
+    .gacha-container {
+        justify-content: space-evenly; /* Evenly space content horizontally */
+        gap: 50px; /* More space between text and button */
+    }
+
+    .title {
+        font-size: 3rem; /* Larger font size for PC */
+    }
+
+    .tagline {
+        font-size: 1.3rem;
+    }
+
+    .question-title {
+        font-size: 2rem;
+    }
+
+    .option-btn {
+        font-size: 1.1rem;
+        padding: 25px;
+    }
+
+    .next-btn {
+        font-size: 1.3rem;
+        padding: 18px 50px;
+    }
+
+    .result-ticket {
+        max-width: 600px;
+        padding: 40px;
+    }
+
+    .wisdom-intro {
+        font-size: 1.125rem;
+    }
+
+    .wisdom-text-main {
+        font-size: 1.75rem;
+    }
+
+    .wisdom-author-main {
+        font-size: 1.2rem;
+    }
+
+    .wisdom-commentary-main, .wisdom-closing {
+        font-size: 1.125rem;
+    }
+
+    .mission-text-main {
+        font-size: 1.125rem;
+    }
+}
+
+@media (max-width: 525px) {
+    .mobile {
+        display: block;
+    }
+    
+    .result-overlay {
+        align-items: center; 
+        padding-top: 0;
+    }
+
+    .result-ticket {
+        padding: 20px;
+        max-width: calc(100% - 40px);
+        max-height: 80vh;
+        overflow-y: auto;
+        margin: auto;
+    }
+
+    .wisdom-intro {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    .wisdom-text-main {
+        font-size: clamp(1.4rem, 4.5vw, 1.6rem);
+        margin-bottom: 20px;
+    }
+
+    .wisdom-author-main {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    .wisdom-commentary-main, .wisdom-closing {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+    
+    .mission-text-main {
+        font-size: 1rem;
+        padding: 12px 15px;
+    }
+
+    .ticket-actions button {
+        font-size: 0.85rem;
+        padding: 10px 8px;
+    }
+
+    .close-btn {
+        top: 8px;
+        right: 8px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .app-container {
+        padding: 15px;
+    }
+
+    .gacha-container {
+        gap: 30px;
+        padding: 0;
+    }
+
+    .title {
+        font-size: clamp(1.8rem, 5vw, 2.2rem);
+        margin-bottom: 5px;
+    }
+
+    .tagline {
+        font-size: clamp(0.8rem, 2.5vw, 1rem);
+        margin-bottom: 30px;
+    }
+
+    .question-title {
+        font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+        margin-bottom: 30px;
+    }
+
+    .options-grid {
+        gap: 10px;
+    }
+
+    .option-btn {
+        font-size: 0.9rem;
+        padding: 15px;
+    }
+
+    .loading-spinner p {
+        font-size: 0.9rem;
+    }
+    
+    .result-ticket {
+        padding: 15px;
+        max-width: calc(100% - 30px);
+    }
+}

@@ -1,0 +1,37 @@
+# Gitignore for common development files
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Python
+*.pyc
+*.pyo
+__pycache__
+.Python
+build/
+dist/
+*.egg-info/
+.env
+.venv
+venv/
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+*.bak
+*~
+
+# Dependencies
+node_modules/
+bower_components/
+
+# Logs and databases
+*.log
+*.sqlite3
+*.db
+
+# Thumbnails and temporary files
+.thumbnails/
+*tmp

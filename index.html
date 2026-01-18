@@ -1,150 +1,93 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>나스닥 100 공포 탐욕 운세 서비스</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>삶의 의미를 잃어버린 당신에게</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-19H951BS8X"></script>
     <script>
-        // Tailwind CSS 다크 모드 설정을 위한 스크립트
-        tailwind.config = {
-            darkMode: 'class',
-        }
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-19H951BS8X');
     </script>
-    <style>
-        /* Tailwind CSS에 추가적인 애니메이션 클래스 정의 */
-        @keyframes dramatic-appear {
-            0% { opacity: 0; transform: translateY(20px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .animate-dramatic-appear {
-            animation: dramatic-appear 0.7s ease-out forwards;
-        }
-    </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+<body>
+    <div class="app-container">
+        <main class="gacha-container">
+            <!-- <h2 class="title">삶의 의미를 잃어버린 당신에게</h2> -->
+            <!-- <p class="tagline">당신만을 위한, 지친 마음을 위한 한 문장의 지혜</p> -->
+            <!-- 3-Step Question UI -->
+            <div class="question-container">
+                <div id="question-1" class="question-step">
+                    <h2 class="question-title">지금 당신의 마음에 가장 가까운 감정은 무엇인가요?</h2>
+                    <div class="options-grid">
+                        <button class="option-btn" data-value="공허함">공허함</button>
+                        <button class="option-btn" data-value="무기력함">무기력함</button>
+                        <button class="option-btn" data-value="불안함">불안함</button>
+                        <button class="option-btn" data-value="슬픔">슬픔</button>
+                    </div>
+                </div>
 
-    <div class="container mx-auto p-4 md:p-8 max-w-2xl">
-        
-        <!-- Header -->
-        <header class="flex justify-between items-center mb-8">
-            <div class="flex items-center gap-3">
-                 <!-- Chart Icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-indigo-600 dark:text-indigo-400">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
-                </svg>
-                <h1 class="text-2xl md:text-3xl font-extrabold text-gray-800 dark:text-white">나스닥 100 공포 탐욕 운세</h1>
+                <div id="question-2" class="question-step hidden">
+                    <h2 class="question-title">그 감정의 원인은 무엇이라고 생각하시나요?</h2>
+                    <div class="options-grid">
+                        <button class="option-btn" data-value="일과 진로">일과 진로</button>
+                        <button class="option-btn" data-value="인간관계">인간관계</button>
+                        <button class="option-btn" data-value="건강">건강</button>
+                        <button class="option-btn" data-value="알 수 없음">알 수 없음</button>
+                    </div>
+                </div>
+
+                <div id="question-3" class="question-step hidden">
+                    <h2 class="question-title">지금 당신에게 가장 필요한 위로의 종류는 무엇인가요?</h2>
+                    <div class="options-grid">
+                        <button class="option-btn" data-value="다정한">다정한 위로</button>
+                        <button class="option-btn" data-value="현실적인">현실적인 조언</button>
+                        <button class="option-btn" data-value="철학적인">철학적인 통찰</button>
+                        <button class="option-btn" data-value="따끔한">따끔한 충고</button>
+                    </div>
+                    <button id="submit-btn" class="next-btn hidden">지혜 찾기</button>
+                </div>
             </div>
-            <button id="theme-toggle" class="text-2xl p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">☀️</button>
-        </header>
-
-        <main class="space-y-8">
-
-            <!-- Market Dashboard -->
-            <section class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg">
-                <h2 class="text-xl font-bold mb-4">현재 시장 지표</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
-                    <div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">나스닥 100 지수</p>
-                        <p class="text-3xl font-bold text-blue-600 dark:text-blue-400">18,000 pt</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">공포 탐욕 지수</p>
-                        <p class="text-3xl font-bold text-orange-500">45 <span class="text-lg">(Neutral)</span></p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- User Input -->
-            <section class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg">
-                <div class="space-y-6">
-                    <div>
-                        <label for="birthdate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">생년월일</label>
-                        <input type="date" id="birthdate" name="birthdate"
-                               class="w-full p-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">투자 성향</label>
-                        <div class="flex gap-4">
-                            <label class="flex-1 p-3 border rounded-lg cursor-pointer text-center"><input type="radio" name="style" value="attack" class="sr-only" checked> 공격</label>
-                            <label class="flex-1 p-3 border rounded-lg cursor-pointer text-center"><input type="radio" name="style" value="defense" class="sr-only"> 방어</label>
-                        </div>
-                    </div>
-                    <button id="get-result-btn" class="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105">
-                        <!-- Crystal Ball/Star Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.475 2.118 2.25 2.25 0 0 1-2.475-2.118c0-.497.158-.957.44-1.344a3 3 0 0 0-1.128-5.78c-.497 0-.957.158-1.344.44a2.25 2.25 0 0 1-2.118-2.475c0-1.217.983-2.199 2.199-2.199.497 0 .957-.158 1.344-.44a3 3 0 0 0 5.78-1.128c0-.497-.158-.957-.44-1.344a2.25 2.25 0 0 1 2.118-2.475 2.25 2.25 0 0 1 2.475 2.118c0 .497-.158.957-.44 1.344a3 3 0 0 0 1.128 5.78c.497 0 .957-.158 1.344-.44a2.25 2.25 0 0 1 2.118 2.475c0 1.217-.983 2.199-2.199 2.199-.497 0-.957.158-1.344.44a3 3 0 0 0-5.78 1.128Z" />
-                        </svg>
-                        <span>운세 확인하기</span>
-                    </button>
-                </div>
-            </section>
-
-            <!-- Result Section (Initially Hidden) -->
-            <section id="result-section" class="hidden">
-                <div id="result-card" class="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl shadow-2xl border border-gray-700">
-                    
-                    <div class="text-center mb-8">
-                        <h2 class="text-xl font-bold text-yellow-300 mb-2">오늘의 투자 지수</h2>
-                        <p id="total-score" class="text-7xl font-extrabold text-white">0</p>
-                    </div>
-
-                    <div class="space-y-6 mb-8">
-                        <!-- 세부 분석 섹션 -->
-                        <h3 class="text-lg font-semibold text-center text-gray-300 border-t border-b border-gray-700 py-2">세부 분석</h3>
-                        
-                        <!-- 시장 분석 -->
-                        <div class="flex items-start gap-4">
-                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-blue-900/50 rounded-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-blue-400"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" /></svg>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-blue-400">시장 분석</h4>
-                                <p id="market-analysis" class="text-gray-300">현재 나스닥은 약간의 불안감 속에서 기회를 엿보고 있습니다.</p>
-                            </div>
-                        </div>
-
-                        <!-- 운명 분석 -->
-                        <div class="flex items-start gap-4">
-                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-purple-900/50 rounded-lg">
-                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-purple-400"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.475 2.118 2.25 2.25 0 0 1-2.475-2.118c0-.497.158-.957.44-1.344a3 3 0 0 0-1.128-5.78c-.497 0-.957.158-1.344.44a2.25 2.25 0 0 1-2.118-2.475c0-1.217.983-2.199 2.199-2.199.497 0 .957-.158 1.344-.44a3 3 0 0 0 5.78-1.128c0-.497-.158-.957-.44-1.344a2.25 2.25 0 0 1 2.118-2.475 2.25 2.25 0 0 1 2.475 2.118c0 .497-.158.957-.44 1.344a3 3 0 0 0 1.128 5.78c.497 0 .957-.158 1.344-.44a2.25 2.25 0 0 1 2.118 2.475c0 1.217-.983 2.199-2.199 2.199-.497 0-.957.158-1.344.44a3 3 0 0 0-5.78 1.128Z" /></svg>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-purple-400">운명 분석</h4>
-                                <p id="destiny-analysis" class="text-gray-300">별들의 기운이 당신의 직관력을 높여주는 날입니다. 내면의 목소리에 귀 기울이세요.</p>
-                            </div>
-                        </div>
-
-                        <!-- 행운의 아이템 -->
-                        <div class="flex items-start gap-4">
-                             <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-amber-900/50 rounded-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-amber-400"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-amber-400">행운의 아이템</h4>
-                                <p id="luck-analysis" class="text-gray-300">오늘의 행운 색상은 '골드'입니다. 금색 아이템을 착용하거나, 오후 3시에 중요한 결정을 내리세요.</p>
-                            </div>
-                        </div>
-                    </div>
-                     <!-- Action Buttons -->
-                    <div class="flex flex-col md:flex-row gap-4 mt-8">
-                        <button id="notify-btn" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105">내일 운세 알림 받기</button>
-                        <button id="share-btn" class="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105">결과 공유하기</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- AdSense Banner -->
-            <section class="mt-12">
-                <div class="bg-gray-200 dark:bg-gray-700 h-24 rounded-lg flex items-center justify-center">
-                    <p class="text-gray-500">광고 배너 (AdSense Area)</p>
-                </div>
-            </section>
-
+            
+            <div id="loading-spinner" class="hidden">
+                <div class="spinner"></div>
+                <p>당신만을 위한 지혜를 찾고 있어요...</p>
+            </div>
         </main>
-    </div>
 
+        <!-- Result Ticket will be shown here -->
+        <div class="result-overlay">
+            <div class="result-ticket">
+                <div class="ticket-content">
+                    <p class="wisdom-intro"></p>
+                    <p class="wisdom-text-main"></p>
+                    <p class="wisdom-author-main"></p>
+                    <p class="wisdom-commentary-main"></p>
+                    <p class="wisdom-closing"></p>
+                    <p class="mission-text-main"></p>
+                </div>
+                <div class="ticket-actions">
+                    <button id="save-btn">이미지로 저장하기</button>
+                    <button id="retry-btn">다시 찾기</button>
+                </div>
+                <button class="close-btn">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6L6 18" stroke="#F5F5F5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6 6L18 18" stroke="#F5F5F5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+</button>
+            </div>
+        </div>
+
+        <!-- Particle effects container -->
+        <div class="particles"></div>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
