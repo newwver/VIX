@@ -1,4 +1,22 @@
+# robots.txt for portfolio-yeji
+# Allow all web crawlers to access all content
 User-agent: *
 Allow: /
 
+# Specific rules for Googlebot
+User-agent: Googlebot
+Allow: /
+
+# Specific rules for NaverBot
+Allow: /
+
+# Specific rules for Bingbot
+User-agent: Bingbot
+Allow: /
+
+# Specific rules for Daumoa (Kakao's bot)
+User-agent: Daumoa
+Allow: /
+
+# Link to the sitemap file
 Sitemap: https://vix-d1h.pages.dev/sitemap.xml
