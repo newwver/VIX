@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>삶의 의미를 잃어버린 당신에게</title>
+    <title data-key="appTitle">삶의 의미를 잃어버린 당신에게</title>
     <link rel="stylesheet" href="style.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-19H951BS8X"></script>
@@ -16,46 +16,50 @@
 </head>
 <body>
     <div class="app-container">
+        <div class="language-switcher">
+            <button class="lang-btn" data-lang="ko">한국어</button>
+            <button class="lang-btn" data-lang="en">English</button>
+        </div>
         <main class="gacha-container">
             <!-- <h2 class="title">삶의 의미를 잃어버린 당신에게</h2> -->
             <!-- <p class="tagline">당신만을 위한, 지친 마음을 위한 한 문장의 지혜</p> -->
             <!-- 3-Step Question UI -->
             <div class="question-container">
                 <div id="question-1" class="question-step">
-                    <h2 class="question-title">지금 당신의 마음에 가장 가까운 감정은 무엇인가요?</h2>
+                    <h2 class="question-title" data-key="q1Title">지금 당신의 마음에 가장 가까운 감정은 무엇인가요?</h2>
                     <div class="options-grid">
-                        <button class="option-btn" data-value="공허함">공허함</button>
-                        <button class="option-btn" data-value="무기력함">무기력함</button>
-                        <button class="option-btn" data-value="불안함">불안함</button>
-                        <button class="option-btn" data-value="슬픔">슬픔</button>
+                        <button class="option-btn" data-key="empty" data-value="공허함">공허함</button>
+                        <button class="option-btn" data-key="powerless" data-value="무기력함">무기력함</button>
+                        <button class="option-btn" data-key="anxious" data-value="불안함">불안함</button>
+                        <button class="option-btn" data-key="sadness" data-value="슬픔">슬픔</button>
                     </div>
                 </div>
 
                 <div id="question-2" class="question-step hidden">
-                    <h2 class="question-title">그 감정의 원인은 무엇이라고 생각하시나요?</h2>
+                    <h2 class="question-title" data-key="q2Title">그 감정의 원인은 무엇이라고 생각하시나요?</h2>
                     <div class="options-grid">
-                        <button class="option-btn" data-value="일과 진로">일과 진로</button>
-                        <button class="option-btn" data-value="인간관계">인간관계</button>
-                        <button class="option-btn" data-value="건강">건강</button>
-                        <button class="option-btn" data-value="알 수 없음">알 수 없음</button>
+                        <button class="option-btn" data-key="workCareer" data-value="일과 진로">일과 진로</button>
+                        <button class="option-btn" data-key="relationships" data-value="인간관계">인간관계</button>
+                        <button class="option-btn" data-key="health" data-value="건강">건강</button>
+                        <button class="option-btn" data-key="unknown" data-value="알 수 없음">알 수 없음</button>
                     </div>
                 </div>
 
                 <div id="question-3" class="question-step hidden">
-                    <h2 class="question-title">지금 당신에게 가장 필요한 위로의 종류는 무엇인가요?</h2>
+                    <h2 class="question-title" data-key="q3Title">지금 당신에게 가장 필요한 위로의 종류는 무엇인가요?</h2>
                     <div class="options-grid">
-                        <button class="option-btn" data-value="다정한">다정한 위로</button>
-                        <button class="option-btn" data-value="현실적인">현실적인 조언</button>
-                        <button class="option-btn" data-value="철학적인">철학적인 통찰</button>
-                        <button class="option-btn" data-value="따끔한">따끔한 충고</button>
+                        <button class="option-btn" data-key="gentleComfort" data-value="다정한">다정한 위로</button>
+                        <button class="option-btn" data-key="realisticAdvice" data-value="현실적인">현실적인 조언</button>
+                        <button class="option-btn" data-key="philosophicalInsight" data-value="철학적인">철학적인 통찰</button>
+                        <button class="option-btn" data-key="sternAdvice" data-value="따끔한">따끔한 충고</button>
                     </div>
-                    <button id="submit-btn" class="next-btn hidden">지혜 찾기</button>
+                    <button id="submit-btn" class="next-btn hidden" data-key="findWisdom">지혜 찾기</button>
                 </div>
             </div>
             
             <div id="loading-spinner" class="hidden">
                 <div class="spinner"></div>
-                <p>당신만을 위한 지혜를 찾고 있어요...</p>
+                <p data-key="loadingMessage">당신만을 위한 지혜를 찾고 있어요...</p>
             </div>
         </main>
 
@@ -71,8 +75,8 @@
                     <p class="mission-text-main"></p>
                 </div>
                 <div class="ticket-actions">
-                    <button id="save-btn">이미지로 저장하기</button>
-                    <button id="retry-btn">다시 찾기</button>
+                    <button id="save-btn" data-key="saveImage">이미지로 저장하기</button>
+                    <button id="retry-btn" data-key="retry">다시 찾기</button>
                 </div>
                 <button class="close-btn">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
