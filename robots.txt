@@ -19,4 +19,4 @@ User-agent: Daumoa
 Allow: /
 
 # Link to the sitemap file
-Sitemap: https://yejipm.com/purpose/sitemap.xml
+Sitemap: https://yeji.site/sitemap.xml

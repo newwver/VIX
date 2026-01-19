@@ -1,0 +1,102 @@
+{
+    "empty": {
+        "relationships": [
+            {
+                "intro": "wisdom1_intro",
+                "wisdom": "wisdom1_wisdom",
+                "author": "wisdom1_author",
+                "deepening": "wisdom1_deepening",
+                "closing": "wisdom1_closing",
+                "mission": "wisdom1_mission"
+            },
+            {
+                "intro": "wisdom2_intro",
+                "wisdom": "wisdom2_wisdom",
+                "author": "wisdom2_author",
+                "deepening": "wisdom2_deepening",
+                "closing": "wisdom2_closing",
+                "mission": "wisdom2_mission"
+            }
+        ],
+        "workCareer": [
+            {
+                "intro": "wisdom3_intro",
+                "wisdom": "wisdom3_wisdom",
+                "author": "wisdom3_author",
+                "deepening": "wisdom3_deepening",
+                "closing": "wisdom3_closing",
+                "mission": "wisdom3_mission"
+            }
+        ],
+        "myself": [
+            {
+                "intro": "wisdom4_intro",
+                "wisdom": "wisdom4_wisdom",
+                "author": "wisdom4_author",
+                "deepening": "wisdom4_deepening",
+                "closing": "wisdom4_closing",
+                "mission": "wisdom4_mission"
+            }
+        ]
+    },
+    "powerless": {
+        "myself": [
+            {
+                "intro": "wisdom5_intro",
+                "wisdom": "wisdom5_wisdom",
+                "author": "wisdom5_author",
+                "deepening": "wisdom5_deepening",
+                "closing": "wisdom5_closing",
+                "mission": "wisdom5_mission"
+            },
+            {
+                "intro": "wisdom6_intro",
+                "wisdom": "wisdom6_wisdom",
+                "author": "wisdom6_author",
+                "deepening": "wisdom6_deepening",
+                "closing": "wisdom6_closing",
+                "mission": "wisdom6_mission"
+            }
+        ],
+        "workCareer": [
+            {
+                "intro": "wisdom7_intro",
+                "wisdom": "wisdom7_wisdom",
+                "author": "wisdom7_author",
+                "deepening": "wisdom7_deepening",
+                "closing": "wisdom7_closing",
+                "mission": "wisdom7_mission"
+            }
+        ]
+    },
+    "anxious": {
+        "future": [
+            {
+                "intro": "wisdom8_intro",
+                "wisdom": "wisdom8_wisdom",
+                "author": "wisdom8_author",
+                "deepening": "wisdom8_deepening",
+                "closing": "wisdom8_closing",
+                "mission": "wisdom8_mission"
+            },
+            {
+                "intro": "wisdom9_intro",
+                "wisdom": "wisdom9_wisdom",
+                "author": "wisdom9_author",
+                "deepening": "wisdom9_deepening",
+                "closing": "wisdom9_closing",
+                "mission": "wisdom9_mission"
+            }
+        ],
+        "relationships": [
+            {
+                "intro": "wisdom10_intro",
+                "wisdom": "wisdom10_wisdom",
+                "author": "wisdom10_author",
+                "deepening": "wisdom10_deepening",
+                "closing": "wisdom10_closing",
+                "mission": "wisdom10_mission"
+            }
+        ]
+    }
+}
