@@ -19,4 +19,4 @@ User-agent: Daumoa
 Allow: /
 
 # Link to the sitemap file
-Sitemap: https://vix-d1h.pages.dev/sitemap.xml
+Sitemap: https://yejipm.com/purpose/sitemap.xml

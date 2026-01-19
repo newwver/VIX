@@ -105,7 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
             naverMapLinkMessage: "당신의 고민이 깊은 것은 그만큼 삶을 소중히 여기고 있다는 증거일 거예요。",
             naverMapLinkMessage2: "문장 너머의 더 깊은 치유가 필요하다면, 당신의 곁에서 직접 이야기를 들어줄 전문가를 찾아보는 건 어떨까요?",
             findExpertsNaverMap: "내 주변 전문가 찾기",
-            keyMessage: "당신의 고민이 깊은 것은 그만큼 삶을 소중히 여기고 있다는 증거일 거예요. 문장 너머의 더 깊은 치유가 필요하다면, 당신의 곁에서 직접 이야기를 들어줄 전문가를 찾아보는 건 어떨까요?"
+            keyMessage: "당신의 고민이 깊은 것은 그만큼 삶을 소중히 여기고 있다는 증거일 거예요. 문장 너머의 더 깊은 치유가 필요하다면, 당신의 곁에서 직접 이야기를 들어줄 전문가를 찾아보는 건 어떨까요?",
+            surveyQuestion: "지금 마음이 조금 가벼워지셨나요?",
+            surveyYesText: "네, 위로가 돼요",
+            surveyNoText: "아직은 잘 모르겠어요"
 
         },
         en: {
@@ -210,16 +213,20 @@ document.addEventListener('DOMContentLoaded', () => {
             fallback_closing: "Believe in yourself and move forward.",
             fallback_mission: "Look at the sky and take three deep breaths.",
             naverMapLinkMessage: "The depth of your worries is proof of how much you cherish life.",
-            keyMessage: "The depth of your concerns is proof of how much you value life. If you need deeper healing beyond these words, why not seek a professional who can listen to you directly?"
+            findExpertsNaverMap: "Find Experts Nearby",
+            keyMessage: "The depth of your concerns is proof of how much you value life. If you need deeper healing beyond these words, why not seek a professional who can listen to you directly?",
+            surveyQuestion: "Are you feeling a bit lighter now?",
+            surveyYesText: "Yes, I feel comforted",
+            surveyNoText: "Not yet, I'm still unsure"
         }
     };
 
     let currentLang = localStorage.getItem('lang') || 'ko'; // Default to Korean
 
     const emotionKeywords = {
-        anxious: '불안장애 정신과',
-        empty: '심리상담소',
-        powerless: '심리상담소', // Assuming similar to emptiness
+        anxious: '정신건강의학과',
+        empty: '심리상담센터',
+        powerless: '심리상담센터', // Assuming similar to emptiness
         sadness: '정신건강의학과' // Assuming requires more formal help
     };
 
@@ -598,6 +605,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeBtn.addEventListener('click', () => {
         resultOverlay.style.display = 'none';
         satisfactionSurvey.classList.remove('hidden');
+        updateContent(); // Ensure survey content is translated when shown
     });
 
     langButtons.forEach(button => {
@@ -611,7 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const surveyNo = document.getElementById('survey-no');
 
     surveyYes.addEventListener('click', () => {
-        console.log('Satisfaction Survey: Yes, comforted!');
+        console.log('Satisfaction Survey: 네 위로가 돼요!');
         if(typeof gtag === 'function') {
             gtag('event', 'survey_respond', {
                 'answer': 'helpful',
@@ -623,7 +631,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     surveyNo.addEventListener('click', () => {
-        console.log('Satisfaction Survey: Still unsure.');
+        console.log('Satisfaction Survey: 아직은 잘 모르겠어요.');
         if(typeof gtag === 'function') {
             gtag('event', 'survey_respond', {
                 'answer': 'not_helpful',
@@ -642,7 +650,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const params = {
                 'link_text': getTranslation('findExpertsNaverMap')
             };
-            console.log(`GA Event - Name: ${eventName}, Parameters:`, params);
+            console.log(`Event - Name: ${eventName}, Parameters:`, params);
 
             if (typeof gtag === 'function') {
                 gtag('event', eventName, params);

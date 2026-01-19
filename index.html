@@ -117,10 +117,10 @@
 
             <!-- Satisfaction Survey after closing ticket -->
             <div class="satisfaction-survey hidden">
-                <p class="survey-question">지금 마음이 조금 가벼워지셨나요?</p>
+                <p class="survey-question" data-key="surveyQuestion"></p>
                 <div class="survey-buttons">
-                    <button class="survey-btn" id="survey-yes">네, 위로가 돼요</button>
-                    <button class="survey-btn" id="survey-no">아직은 잘 모르겠어요</button>
+                    <button class="survey-btn" id="survey-yes" data-key="surveyYesText"></button>
+                    <button class="survey-btn" id="survey-no" data-key="surveyNoText"></button>
                 </div>
             </div>
         </main>
@@ -128,6 +128,15 @@
         <!-- Result Ticket will be shown here -->
         <div class="result-overlay">
             <div class="result-ticket">
+                <div class="ticket-header">                    
+                    <button class="close-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18" stroke="#F5F5F5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6 6L18 18" stroke="#F5F5F5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            
+                        </svg>
+                    </button>
+                </div>
                 <div class="ticket-content">
                     <p class="wisdom-intro"></p>
                     <p class="wisdom-text-main"></p>
@@ -144,13 +153,6 @@
                         <span data-key="findExpertsNaverMap">내 주변 전문가 찾기</span>
                     </button>
                 </div>
-                <button class="close-btn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 6L6 18" stroke="#F5F5F5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M6 6L18 18" stroke="#F5F5F5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          
-                    </svg>
-                </button>
             </div>
         </div>
 
@@ -170,7 +172,7 @@
 
       const EMOTION_TO_QUERY = {
         empty: '심리상담센터',
-        powerless: '심리상담센터',
+        powerless: '번아웃 상담',
         anxious: '정신건강의학과',
         sadness: '우울증 상담'
       };
