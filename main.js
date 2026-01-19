@@ -47,14 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
             wisdom3_closing: "성취보다 중요한 것은 당신이 지나온 그 모든 과정입니다.",
             wisdom3_mission: "책상 위 물건 중 가장 오랫동안 자리를 지킨 물건 하나를 정성껏 닦아주세요.",
 
-            wisdom4_intro: "내가 누구인지, 왜 사는지 도무지 알 수 없어 가슴 한구석이 서늘해질 때...",
+            wisdom4_intro: "왜 사는지 도무지 알 수 없어 가슴 한구석이 텅 비어갈 때...",
             wisdom4_wisdom: "텅 빈 충만, 그 역설의 의미를 체득해야 한다.",
             wisdom4_author: "법정 스님",
             wisdom4_deepening: "비어있다는 것은 부족함이 아니라, 무엇이든 채울 수 있는 가능성을 뜻합니다. 마음의 공허함은 당신의 영혼이 잠시 쉬어 가고 싶다는 신호일지 모릅니다. 무언가로 억지로 채우려 하기보다 그 비어있음을 가만히 응시해 보세요.",
             wisdom4_closing: "비워진 만큼 당신은 더 넓고 깊어질 것입니다.",
             wisdom4_mission: "방 안의 불을 모두 끄고 1분간 어둠의 고요함을 온전히 누려보세요.",
 
-            wisdom5_intro: "손가락 하나 까딱할 힘조차 없고, 모든 게 덧없게 느껴져 답답해 돌아버릴 것 같을 때...",
+            wisdom5_intro: "모든 게 덧없게 느껴져 답답할 때...",
             wisdom5_wisdom: "다람쥐도 살고 토끼도 사는데, 사람이 못 살 이유가 뭐가 있습니까.",
             wisdom5_author: "법륜 스님",
             wisdom5_deepening: "삶에 거창한 의미가 꼭 있어야 하는 것은 아닙니다. 그저 태어났기에 살아가고, 살아있기에 오늘을 맞이하는 것만으로도 생명의 도리를 다하는 것입니다. 의미를 찾지 못해 괴로워하는 당신에게 스님은 '그냥 살아도 괜찮다'고 말합니다.",
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             wisdom6_wisdom: "나를 죽이지 못하는 것은 나를 더 강하게 만들 뿐이다.",
             wisdom6_author: "프리드리히 니체",
             wisdom6_deepening: "무기력은 당신이 너무 강하게 버티려다 잠시 방전된 상태일 뿐입니다. 이 깊은 침잠의 시간 또한 당신을 더 단단하게 만드는 과정입니다. 아무것도 하지 않는 지금의 당신도 여전히 성장하고 있습니다.",
-            wisdom6_closing: "잠시 멈춰 서 있는 당신을 응원합니다.",
+            wisdom6_closing: "잠시 멈춰 서 있는 당신도 응원합니다.",
             wisdom6_mission: "눈을 감고 가장 깊고 느린 호흡을 세 번만 반복해 보세요.",
 
             wisdom7_intro: "해야 할 일은 쌓여있는데 도무지 의욕이 생기지 않을 때...",
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fallback_mission: "하늘을 보며 크게 심호흡을 세 번 해보세요。",
             naverMapLinkMessage: "당신의 고민이 깊은 것은 그만큼 삶을 소중히 여기고 있다는 증거일 거예요。",
             naverMapLinkMessage2: "문장 너머의 더 깊은 치유가 필요하다면, 당신의 곁에서 직접 이야기를 들어줄 전문가를 찾아보는 건 어떨까요?",
-            findExpertsNaverMap: "네이버 지도에서 전문가 찾기"
+            findExpertsNaverMap: "내 주변 전문가 찾기"
 
         },
         en: {
@@ -536,35 +536,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // After displaying wisdom, find nearby clinics
             const emotionKeyForClinic = userSelections.emotion[0] || 'empty';
-            displayNaverMapLink(emotionKeyForClinic); // Display Naver Map link
+            if(window.showNaverMapLink) {
+                window.showNaverMapLink(emotionKeyForClinic);
+            }
 
         }, 50);
     }
 
     function reset() {
-        resultOverlay.style.display = 'none';
-        questionContainer.classList.remove('hidden');
-        
-        document.querySelectorAll('.option-btn.selected').forEach(btn => {
-            btn.classList.remove('selected');
-        });
-        document.querySelectorAll('.next-btn').forEach(btn => { 
-            btn.classList.add('hidden');
-        });
-
-        questionSteps[1].classList.remove('hidden');
-        questionSteps[2].classList.add('hidden');
-        questionSteps[3].classList.add('hidden');
-        currentStep = 1;
+        // Reset selections
         userSelections.emotion = [];
         userSelections.cause = [];
         userSelections.need = [];
-        submitBtn.classList.add('hidden');
+        currentStep = 1;
 
-        satisfactionSurvey.style.display = 'none'; // Hide satisfaction survey
-        naverMapLinkContainer.style.display = 'none'; // Hide Naver Map link container
-        naverMapLink.href = '#'; // Reset Naver Map link
+        // Hide result overlay and satisfaction survey
+        resultOverlay.style.display = 'none';
+        satisfactionSurvey.classList.add('hidden');
+
+        // Show question container and first question
+        questionContainer.classList.remove('hidden');
+        Object.values(questionSteps).forEach(step => step.classList.add('hidden'));
+        questionSteps[1].classList.remove('hidden');
+        
+        // Deselect all buttons
+        document.querySelectorAll('.option-btn.selected').forEach(btn => btn.classList.remove('selected'));
+        
+        // Hide submit button
+        submitBtn.classList.add('hidden');
+        
+        // Hide loading spinner
+        loadingSpinner.classList.add('hidden');
     }
+    
+    window.resetApp = reset;
+
 
     // --- Event Listeners ---
     document.querySelectorAll('.option-btn').forEach(btn => {
@@ -584,36 +590,13 @@ document.addEventListener('DOMContentLoaded', () => {
             link.download = filename;
             link.href = canvas.toDataURL('image/png');
             link.click();
-            satisfactionSurvey.style.display = 'block'; // Show survey after saving
         });
     });
 
-    retryBtn.addEventListener('click', () => {
-        satisfactionSurvey.style.display = 'block'; // Show survey on retry
-    });
     closeBtn.addEventListener('click', () => {
-        satisfactionSurvey.style.display = 'block'; // Show survey on close
+        resultOverlay.style.display = 'none';
+        satisfactionSurvey.classList.remove('hidden');
     });
-
-    // Add new event listeners here for satisfaction survey buttons
-    const surveyYesBtn = document.getElementById('survey-yes');
-    const surveyNoBtn = document.getElementById('survey-no');
-
-    if (surveyYesBtn) {
-        surveyYesBtn.addEventListener('click', () => {
-            console.log('Satisfaction Survey: Yes, comforted!');
-            satisfactionSurvey.style.display = 'none'; // Hide survey
-            reset(); // Reset the app
-        });
-    }
-
-    if (surveyNoBtn) {
-        surveyNoBtn.addEventListener('click', () => {
-            console.log('Satisfaction Survey: Still unsure.');
-            satisfactionSurvey.style.display = 'none'; // Hide survey
-            reset(); // Reset the app
-        });
-    }
 
     langButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -621,15 +604,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Setup survey buttons
+    const surveyYes = document.getElementById('survey-yes');
+    const surveyNo = document.getElementById('survey-no');
+
+    surveyYes.addEventListener('click', () => {
+        console.log('Satisfaction Survey: Yes, comforted!');
+        if(typeof gtag === 'function') {
+            gtag('event', 'survey_respond', {
+                'answer': 'helpful',
+                'button_id': 'survey-yes'
+            });
+        }
+        alert('피드백이 전송되었습니다!');
+        window.resetApp(); // Use window.resetApp to ensure global access
+    });
+
+    surveyNo.addEventListener('click', () => {
+        console.log('Satisfaction Survey: Still unsure.');
+        if(typeof gtag === 'function') {
+            gtag('event', 'survey_respond', {
+                'answer': 'not_helpful',
+                'button_id': 'survey-no'
+            });
+        }
+        alert('더 나은 서비스를 위해 노력하겠습니다.');
+        reset();
+    });
+
     // Initial setup
     updateContent(); // Apply translations on load
     reset(); // Set initial state correctly
-
-    // Force default button selection for unknown cause to 'future' key
-    // This needs to happen after initial content update so data-value is set to keys
-    const unknownCauseButton = document.querySelector('.option-btn[data-key="unknown"]');
-    if (unknownCauseButton) {
-        unknownCauseButton.dataset.value = 'future';
-    }
 
 });

@@ -7,10 +7,10 @@
     <title>삶의 의미를 잃어버린 당신에게 - 마음의 위안과 한 문장의 지혜</title>
     <meta name="description" content="공허함, 무기력함, 불안함 속에 있는 당신을 위한 처방전. 당신의 감정과 고민에 맞는 단 하나의 지혜로운 문장을 찾고 마음의 위안을 얻으세요.">
     <meta name="keywords" content="삶의 의미, 왜 살아야 할까, 살아야 하는 이유, 무기력증, 공허함, 번아웃, 우울, 왜 살아야 하는지 모르겠을 때, 명언">
-    <link rel="canonical" href="https://vix-d1h.pages.dev/">
+    <link rel="canonical" href="https://yejipm.com/purpose">
 
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://vix-d1h.pages.dev/">
+    <meta property="og:url" content="https://yejipm.com/purpose">
     <meta property="og:title" content="삶의 의미를 잃어버린 당신에게">
     <meta property="og:description" content="지금 당신의 마음을 안아줄 지혜를 찾아보세요.">
     <meta property="og:image" content="preview.png">
@@ -53,7 +53,7 @@
     </script>
 
     <link rel="preload" as="style" href="style.css">
-    <link rel="stylesheet" href="style.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="style.css">
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-19H951BS8X"></script>
     <script>
@@ -114,6 +114,15 @@
                 <div class="spinner"></div>
                 <p data-key="loadingMessage">당신만을 위한 지혜를 찾고 있어요...</p>
             </div>
+
+            <!-- Satisfaction Survey after closing ticket -->
+            <div class="satisfaction-survey hidden">
+                <p class="survey-question">지금 마음이 조금 가벼워지셨나요?</p>
+                <div class="survey-buttons">
+                    <button class="survey-btn" id="survey-yes">네, 위로가 돼요</button>
+                    <button class="survey-btn" id="survey-no">아직은 잘 모르겠어요</button>
+                </div>
+            </div>
         </main>
 
         <!-- Result Ticket will be shown here -->
@@ -125,25 +134,19 @@
                     <p class="wisdom-author-main"></p>
                     <p class="wisdom-commentary-main"></p>
                     <p class="wisdom-closing"></p>
-                                    <p class="mission-text-main"></p>
-                                    <!-- Satisfaction Survey -->
-                                    <div class="satisfaction-survey">
-                                        <p class="survey-question">지금 마음이 조금 가벼워지셨나요?</p>
-                                        <div class="survey-buttons">
-                                            <button class="survey-btn" id="survey-yes">네, 위로가 돼요</button>
-                                            <button class="survey-btn" id="survey-no">아직은 잘 모르겠어요</button>
-                                        </div>
-                                    </div>
-                                    <div id="naver-map-link-container" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e9e2d1; text-align: center; display: none;">
-                                        <p data-key="naverMapLinkMessage" style="font-size: 1rem; color: #3c3c3c; margin-bottom: 10px;"></p>
-                                        <p data-key="naverMapLinkMessage2" style="font-size: 1rem; color: #3c3c3c; margin-bottom: 15px;"></p>
-                                        <a id="naver-map-link" href="#" target="_blank" class="next-btn" style="text-decoration: none; display: inline-block;">
-                                            <span data-key="findExpertsNaverMap">네이버 지도에서 전문가 찾기</span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="ticket-actions">                                    <button id="save-btn" data-key="saveImage">이미지로 저장하기</button>
-                                    <button id="retry-btn" data-key="retry">다시 찾기</button>                </div>
+                    <p class="mission-text-main"></p>
+                    <p class="key-message">
+                        당신의 고민이 깊은 것은 그만큼 삶을 소중히 여기고 있다는 증거일 거예요. 
+                        문장 너머의 더 깊은 치유가 필요하다면, 당신의 곁에서 직접 이야기를 들어줄 전문가를 찾아보는 건 어떨까요?
+                    </p>
+
+                </div>
+                <div class="ticket-actions">  
+                    <button id="save-btn" data-key="saveImage">이미지로 저장하기</button>
+                    <button id="naver-map-link" class="map-btn" onclick="window.open(this.dataset.href, '_blank')" data-href="https://map.naver.com/v5/search/%EC%8B%AC%EB%A6%AC%EC%83%81%EB%8B%B4%EC%84%BC%ED%84%B0">
+                        <span data-key="findExpertsNaverMap">내 주변 전문가 찾기</span>
+                    </button>
+                </div>
                 <button class="close-btn">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M18 6L6 18" stroke="#F5F5F5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -160,12 +163,100 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="main.js"></script>
-    <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "v38eowu16x");
+
+    <script>
+    (function(){
+      const mapContainer = document.getElementById('naver-map-link-container');
+      const mapLink = document.getElementById('naver-map-link');
+      const msg1 = mapContainer ? mapContainer.querySelector('[data-key="naverMapLinkMessage"]') : null;
+      const msg2 = mapContainer ? mapContainer.querySelector('[data-key="naverMapLinkMessage2"]') : null;
+
+      const EMOTION_TO_QUERY = {
+        empty: '심리상담센터',
+        powerless: '심리상담센터',
+        anxious: '정신건강의학과',
+        sadness: '우울증 상담'
+      };
+
+      // main.js에서 결과를 렌더한 직후에 호출하세요.
+      // 예: window.showNaverMapLink('empty');
+      window.showNaverMapLink = function(emotionKey){
+        try {
+          const query = EMOTION_TO_QUERY[emotionKey] || '심리상담센터';
+          const encoded = encodeURIComponent(query);
+          if (mapLink) mapLink.dataset.href = 'https://map.naver.com/v5/search/' + encoded;
+          if (msg1) msg1.textContent = '선택하신 감정에 맞는 전문가를 찾아보실 수 있어요.';
+          if (msg2) msg2.textContent = '네이버 지도에서 검색 결과를 확인해보세요. (새 탭에서 열림)';
+          if (mapContainer) mapContainer.style.display = 'block';
+        } catch (e) {
+          // 실패해도 페이지 동작에는 영향 없음
+          if (mapContainer) mapContainer.style.display = 'none';
+        }
+      };
+    })();
+    </script>
+
+    <script>
+    (function(){
+      function showToast(text, duration = 3500) {
+        if (!text) return;
+        const id = 'custom-toast';
+        if (document.getElementById(id)) return;
+        const toast = document.createElement('div');
+        toast.id = id;
+        toast.textContent = text;
+        Object.assign(toast.style, {
+          position: 'fixed',
+          left: '50%',
+          bottom: '24px',
+          transform: 'translateX(-50%)',
+          background: 'rgba(0,0,0,0.85)',
+          color: '#fff',
+          padding: '10px 16px',
+          borderRadius: '20px',
+          boxShadow: '0 6px 18px rgba(0,0,0,0.25)',
+          zIndex: 9999,
+          opacity: '0',
+          transition: 'opacity 220ms ease'
+        });
+        document.body.appendChild(toast);
+        requestAnimationFrame(() => { toast.style.opacity = '1'; });
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.addEventListener('transitionend', () => toast.remove());
+        }, duration);
+      }
+
+      // Make showToast global so main.js can use it
+      window.showToast = showToast;
+
+      const closeBtn = document.querySelector('.result-overlay .close-btn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          const overlay = document.querySelector('.result-overlay');
+          if (overlay) overlay.style.display = 'none';
+          // Show satisfaction survey in gacha-container
+          const survey = document.querySelector('.satisfaction-survey');
+          if (survey) survey.classList.remove('hidden');
+        });
+      }
+
+      const overlay = document.querySelector('.result-overlay');
+      const ticket = document.querySelector('.result-ticket');
+
+      // Close on overlay click and show survey
+      overlay.addEventListener('click', () => {
+        overlay.style.display = 'none';
+        // Show satisfaction survey in gacha-container
+        const survey = document.querySelector('.satisfaction-survey');
+        if (survey) survey.classList.remove('hidden');
+      });
+
+      // Prevent closing when clicking on the ticket itself
+      ticket.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    })();
     </script>
 </body>
 </html>

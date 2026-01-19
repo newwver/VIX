@@ -200,18 +200,18 @@ body {
 }
 
 .result-ticket {
-    background-color: #fdfaf4;
+    background: linear-gradient(to bottom right, #fdfaf4 0%, #f5f0e4 50%, #e9e2d1 100%);
     color: #3d3d3d;
     width: 100%;
     max-width: 500px;
     padding: 30px;
-    border-radius: 8px; /* Slightly rounded corners */
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+    border-radius: 12px; /* Slightly more rounded for a letter feel */
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.5); /* Inner highlight for paper texture */
     text-align: left;
     font-family: var(--font-family-serif); /* Elegant Serif font */
     position: relative;
     margin: auto;
-    border-top: 8px solid var(--primary-color); /* Primary color border */
+    border: 2px solid #d4c4a8; /* Paper-like border */
 }
 
 .close-btn {
@@ -251,7 +251,7 @@ body {
     font-size: 1.125rem;
     line-height: 1.8;
     color: #3c3c3c;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     word-break: keep-all;
 }
 
@@ -278,18 +278,18 @@ body {
 .wisdom-commentary-main {
     font-size: 1.05rem;
     line-height: 1.8;
-    color: #333;
-    margin-bottom: 20px;
-    padding: 0 10px; /* Indent slightly */
+    color: #2c2c2c;
+    margin-bottom: 15px;
+    /* padding: 0 10px;  */
     word-break: keep-all;
 }
 
 .wisdom-closing {
-    font-size: 1.125rem;
+    font-size: 1rem;
     line-height: 1.8;
-    color: #3c3c3c;
-    margin-bottom: 25px;
-    text-align: center;
+    color: #2c2c2c;
+    margin-bottom: 15px;
+    /* text-align: center; */
 }
 
 .mission-text-main {
@@ -297,11 +297,38 @@ body {
     font-weight: 500;
     line-height: 1.6;
     color: #2c2c2c;
-    background-color: #f0f0e8;
-    padding: 15px 20px;
-    border-radius: 6px;
+    position: relative;
 }
 
+.mission-text-main::before {
+    content: "*";
+    position: absolute;
+    top: -11px;
+    left: -11px;
+    color: var(--highlight-color); /* Highlight color to match theme */
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.key-message {  
+    background-color: #f0f0e8;
+    padding: 14px 20px 15px;
+    border-radius: 6px;
+    color: #222;
+    margin-top: 20px;
+    line-height: 1.7;
+    word-break: keep-all;
+}
+
+.map-btn {
+    display: block;
+    color: #0326a1;
+    font-size: 0.95rem;
+    font-weight: 400;
+    padding: 15px 0 10px;
+    cursor: pointer;
+    font-family: sans-serif;
+}
 
 .ticket-actions {
     display: flex;
@@ -316,22 +343,29 @@ body {
     flex-grow: 1;
     padding: 14px 10px;
     border: 1px solid #dcd1b8;
-    border-radius: 5px;
+    border-radius: 8px; /* Slightly more rounded to match letter style */
     cursor: pointer;
     font-family: var(--font-family-sans);
     font-size: 1rem;
     font-weight: bold;
-    transition: all 0.2s;
+    transition: all 0.3s ease; /* Smooth transition for hover */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for paper feel */
+}
+
+.ticket-actions button:hover {
+    background-color: #f7f6f3;
 }
 
 #save-btn {
-    background-color: #3d3d3d;
-    color: #fff;
-    border-color: #3d3d3d;
+    background: transparent;
+    color: #3d3d3d;
+    border-color: #d4c4a8;
 }
 
 #save-btn:hover {
-    background-color: #000;
+    /* background: linear-gradient(to bottom, #e9e2d1 0%, #dcd1b8 100%); */
+    transform: translateY(-1px); /* Lift effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 #retry-btn {
@@ -422,15 +456,15 @@ body {
     }
 
     .wisdom-author-main {
-        font-size: 1.2rem;
+        font-size: 1.125rem;
     }
 
     .wisdom-commentary-main, .wisdom-closing {
-        font-size: 1.125rem;
+        font-size: 1rem;
     }
 
     .mission-text-main {
-        font-size: 1.125rem;
+        font-size: 1rem;
     }
 }
 
@@ -467,7 +501,7 @@ body {
         margin-bottom: 15px;
     }
 
-    .wisdom-commentary-main, .wisdom-closing {
+    .wisdom-commentary-main{
         font-size: 1rem;
         margin-bottom: 15px;
     }
