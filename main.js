@@ -293,11 +293,26 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   
-    closeBtn?.addEventListener('click', reset);
-  
     langButtons.forEach(btn =>
       btn.addEventListener('click', () => setLanguage(btn.dataset.lang))
     );
+
+    document.getElementById('survey-yes')?.addEventListener('click', () => {
+      console.log('Survey Yes clicked, dispatching answer: yes');
+      gtag('event', 'answer', { answer: 'yes' });
+      reset();
+    });
+
+    document.getElementById('survey-no')?.addEventListener('click', () => {
+      console.log('Survey No clicked, dispatching answer: no');
+      gtag('event', 'answer', { answer: 'no' });
+      reset();
+    });
+
+    document.getElementById('naver-map-link')?.addEventListener('click', () => {
+      console.log('Find Experts clicked, dispatching link_text: find_experts');
+      gtag('event', 'link_text', { link_text: 'find_experts' });
+    });
   
     // ===============================
     // 8. INIT

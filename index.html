@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     
-    <title>삶의 의미를 잃어버린 당신에게 - 마음의 위안과 한 문장의 지혜</title>
+    <title>삶의 의미를 잃어버린 당신에게</title>
     <meta name="description" content="공허함, 무기력함, 불안함 속에 있는 당신을 위한 처방전. 당신의 감정과 고민에 맞는 단 하나의 지혜로운 문장을 찾고 마음의 위안을 얻으세요.">
     <meta name="keywords" content="삶의 의미, 왜 살아야 할까, 살아야 하는 이유, 무기력증, 공허함, 번아웃, 우울, 왜 살아야 하는지 모르겠을 때, 명언">
-    <link rel="canonical" href="https://yejipm.com/purpose">
+    <link rel="canonical" href="https://yeji.site">
 
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yejipm.com/purpose">
+    <meta property="og:url" content="https://yeji.site">
     <meta property="og:title" content="삶의 의미를 잃어버린 당신에게">
     <meta property="og:description" content="지금 당신의 마음을 안아줄 지혜를 찾아보세요.">
     <meta property="og:image" content="preview.png">
@@ -55,12 +55,12 @@
     <link rel="preload" as="style" href="style.css">
     <link rel="stylesheet" href="style.css">
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5WMGJ8NHF5"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-19H951BS8X"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-5WMGJ8NHF5');
+      gtag('config', 'G-19H951BS8X');
     </script>
 
 </head>
@@ -160,7 +160,102 @@
         <div class="particles"></div>
 
     </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-        <script src="main.js"></script>
-    </body>
-    </html>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+    (function(){
+      const mapContainer = document.getElementById('naver-map-link-container');
+      const mapLink = document.getElementById('naver-map-link');
+      const msg1 = mapContainer ? mapContainer.querySelector('[data-key="naverMapLinkMessage"]') : null;
+      const msg2 = mapContainer ? mapContainer.querySelector('[data-key="naverMapLinkMessage2"]') : null;
+
+      const EMOTION_TO_QUERY = {
+        empty: '심리상담센터',
+        powerless: '번아웃 상담',
+        anxious: '정신건강의학과',
+        sadness: '우울증 상담'
+      };
+
+      // main.js에서 결과를 렌더한 직후에 호출하세요.
+      // 예: window.showNaverMapLink('empty');
+      window.showNaverMapLink = function(emotionKey){
+        try {
+          const query = EMOTION_TO_QUERY[emotionKey] || '심리상담센터';
+          const encoded = encodeURIComponent(query);
+          if (mapLink) mapLink.dataset.href = 'https://map.naver.com/v5/search/' + encoded;
+          if (msg1) msg1.textContent = '선택하신 감정에 맞는 전문가를 찾아보실 수 있어요.';
+          if (msg2) msg2.textContent = '네이버 지도에서 검색 결과를 확인해보세요. (새 탭에서 열림)';
+          if (mapContainer) mapContainer.style.display = 'block';
+        } catch (e) {
+          // 실패해도 페이지 동작에는 영향 없음
+          if (mapContainer) mapContainer.style.display = 'none';
+        }
+      };
+    })();
+    </script>
+
+    <script>
+    (function(){
+      function showToast(text, duration = 3500) {
+        if (!text) return;
+        const id = 'custom-toast';
+        if (document.getElementById(id)) return;
+        const toast = document.createElement('div');
+        toast.id = id;
+        toast.textContent = text;
+        Object.assign(toast.style, {
+          position: 'fixed',
+          left: '50%',
+          bottom: '24px',
+          transform: 'translateX(-50%)',
+          background: 'rgba(0,0,0,0.85)',
+          color: '#fff',
+          padding: '10px 16px',
+          borderRadius: '20px',
+          boxShadow: '0 6px 18px rgba(0,0,0,0.25)',
+          zIndex: 9999,
+          opacity: '0',
+          transition: 'opacity 220ms ease'
+        });
+        document.body.appendChild(toast);
+        requestAnimationFrame(() => { toast.style.opacity = '1'; });
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.addEventListener('transitionend', () => toast.remove());
+        }, duration);
+      }
+
+      // Make showToast global so main.js can use it
+      window.showToast = showToast;
+
+      const closeBtn = document.querySelector('.result-overlay .close-btn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          const overlay = document.querySelector('.result-overlay');
+          if (overlay) overlay.style.display = 'none';
+          // Show satisfaction survey in gacha-container
+          const survey = document.querySelector('.satisfaction-survey');
+          if (survey) survey.classList.remove('hidden');
+        });
+      }
+
+      const overlay = document.querySelector('.result-overlay');
+      const ticket = document.querySelector('.result-ticket');
+
+      // Close on overlay click and show survey
+      overlay.addEventListener('click', () => {
+        overlay.style.display = 'none';
+        // Show satisfaction survey in gacha-container
+        const survey = document.querySelector('.satisfaction-survey');
+        if (survey) survey.classList.remove('hidden');
+      });
+
+      // Prevent closing when clicking on the ticket itself
+      ticket.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    })();
+    </script>
+</body>
+</html>
