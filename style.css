@@ -328,7 +328,7 @@ body {
     word-break: keep-all;
 }
 
-.report-btn {    
+#report-btn {    
     color: #0326a1;
 }
 
@@ -339,6 +339,7 @@ body {
     padding: 15px 0 10px;
     cursor: pointer;
     font-family: sans-serif;
+    background: transparent;
 }
 
 .ticket-actions {
