@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===============================
     let translations = {};
     let wisdomLibrary = {};
-    let currentLang = localStorage.getItem('lang') || 'ko';
+    let currentLang = document.documentElement.lang || localStorage.getItem('lang') || 'ko';
   
     function getTranslation(key, lang = currentLang) {
       return (
@@ -135,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateContent() {
       document.documentElement.lang = currentLang;
       document.title = getTranslation('appTitle');
+      document.querySelector('meta[name="description"]').setAttribute('content', getTranslation('appDescription'));
   
       document.querySelectorAll('[data-key]').forEach(el => {
         el.textContent = getTranslation(el.dataset.key);
@@ -150,12 +151,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   
     function setLanguage(lang) {
-      currentLang = lang;
+      if (lang === currentLang) return;
       localStorage.setItem('lang', lang);
-      updateContent();
-  
-      if (lastDisplayedWisdom && getComputedStyle(resultOverlay).display === 'flex') {
-        displayWisdomTicket(lastDisplayedWisdom);
+      if (lang === 'en') {
+        window.location.href = '/index.en.html';
+      } else {
+        window.location.href = '/index.html';
       }
     }
   
@@ -167,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultTicketEl = document.querySelector('.result-ticket');
     const loadingSpinner = document.getElementById('loading-spinner');
     const submitBtn = document.getElementById('submit-btn');
-    const saveBtn = document.getElementById('save-btn');
+    const reportBtn = document.getElementById('report-btn');
     const closeBtn = document.querySelector('.close-btn');
     const langButtons = document.querySelectorAll('.lang-btn');
     const satisfactionSurvey = document.querySelector('.satisfaction-survey');
@@ -284,13 +285,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
     submitBtn?.addEventListener('click', getWisdom);
   
-    saveBtn?.addEventListener('click', () => {
-      html2canvas(resultTicketEl, { backgroundColor: null, scale: 2 }).then(canvas => {
-        const a = document.createElement('a');
-        a.download = currentLang === 'ko' ? '오늘의-지혜.png' : 'Todays-Wisdom.png';
-        a.href = canvas.toDataURL('image/png');
-        a.click();
-      });
+    reportBtn?.addEventListener('click', () => {
+      console.log('report-btn clicked');
+      showToast(getTranslation('featureInProgress'));
     });
   
     langButtons.forEach(btn =>
