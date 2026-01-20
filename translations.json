@@ -1,6 +1,6 @@
 {
     "ko": {
-        "appTitle": "살아야 하는 이유 | 왜 살아야 할까 | 삶의 의미 찾기",
+        "appTitle": "당신에게",
         "q1Title": "지금 당신의 마음에 가장 가까운 감정은 무엇인가요?",
         "empty": "공허함",
         "powerless": "무기력함",
@@ -97,7 +97,7 @@
         "surveyNoText": "아직은 잘 모르겠어요"
     },
     "en": {
-        "appTitle": "Reason to Live | Why Should I Live | Finding the Meaning of Life",
+        "appTitle": "To you...",
         "appDescription": "Have you lost your reason to live? When you don't know why you should live, find the meaning of life here. A single wise sentence tailored to your emotions and concerns is waiting for you.",
         "q1Title": "What emotion is closest to your heart right now?",
         "empty": "Emptiness",
