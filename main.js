@@ -288,6 +288,11 @@ document.addEventListener('DOMContentLoaded', () => {
     reportBtn?.addEventListener('click', () => {
       console.log('report-btn clicked');
       showToast(getTranslation('featureInProgress'));
+      gtag('event', 'generate_report_click', {
+        event_category: 'engagement',
+        event_label: 'personalized_report_button',
+        button_text: getTranslation('getReport')
+      });
     });
   
     langButtons.forEach(btn =>
