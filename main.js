@@ -237,25 +237,83 @@ document.addEventListener('DOMContentLoaded', () => {
       resultElements.mission.textContent = getTranslation(w.mission);
     }
   
+  
+  
     function getWisdom() {
+  
       questionContainer.classList.add('hidden');
+  
       loadingSpinner.classList.remove('hidden');
   
+  
+  
       setTimeout(() => {
+  
         const emotion = userSelections.emotion[0] || 'empty';
-        const emotionSet = wisdomLibrary[emotion] || {};
-        const pools = Object.values(emotionSet).flat();
-        const wisdom = pools[Math.floor(Math.random() * pools.length)];
+  
+        const cause = userSelections.cause[0];
+  
+        const need = userSelections.need[0];
+  
+  
+  
+        let pools = [];
+  
+        if (cause && need) {
+  
+          pools = wisdomLibrary[emotion]?.[cause]?.[need] || [];
+  
+        }
+  
+        if (pools.length === 0 && cause) {
+  
+          pools = wisdomLibrary[emotion]?.[cause]
+  
+            ? Object.values(wisdomLibrary[emotion][cause]).flat()
+  
+            : [];
+  
+        }
+  
+        if (pools.length === 0) {
+  
+          pools = wisdomLibrary[emotion]
+  
+            ? Object.values(wisdomLibrary[emotion]).flat()
+  
+            : [];
+  
+        }
+  
+  
+  
+        let wisdom = pools[Math.floor(Math.random() * pools.length)];
+  
+  
+  
+        if (!wisdom) {
+  
+          wisdom = wisdomLibrary.fallback[Math.floor(Math.random() * wisdomLibrary.fallback.length)];
+  
+        }
+  
+  
   
         displayWisdomTicket(wisdom);
+  
         loadingSpinner.classList.add('hidden');
+  
         resultOverlay.style.display = 'flex';
   
+  
+  
         window.showGoogleMapLink?.(emotion);
+  
       }, 50);
+  
     }
   
-    function reset() {
+        function reset() {
       Object.keys(userSelections).forEach(k => (userSelections[k] = []));
       currentStep = 1;
   

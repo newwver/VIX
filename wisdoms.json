@@ -98,5 +98,15 @@
                 "mission": "wisdom10_mission"
             }
         ]
-    }
+    },
+    "fallback": [
+        {
+            "intro": "fallback_intro",
+            "wisdom": "fallback_wisdom",
+            "author": "fallback_author",
+            "deepening": "fallback_deepening",
+            "closing": "fallback_closing",
+            "mission": "fallback_mission"
+        }
+    ]
 }
