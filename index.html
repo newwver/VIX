@@ -187,38 +187,6 @@
 
     <script>
     (function(){
-      const mapContainer = document.getElementById('naver-map-link-container');
-      const mapLink = document.getElementById('naver-map-link');
-      const msg1 = mapContainer ? mapContainer.querySelector('[data-key="naverMapLinkMessage"]') : null;
-      const msg2 = mapContainer ? mapContainer.querySelector('[data-key="naverMapLinkMessage2"]') : null;
-
-      const EMOTION_TO_QUERY = {
-        empty: '심리상담센터',
-        powerless: '심리상담센터',
-        anxious: '정신건강의학과',
-        sadness: '정신건강의학과'
-      };
-
-      // main.js에서 결과를 렌더한 직후에 호출하세요.
-      // 예: window.showNaverMapLink('empty');
-      window.showNaverMapLink = function(emotionKey){
-        try {
-          const query = EMOTION_TO_QUERY[emotionKey] || '심리상담센터';
-          const encoded = encodeURIComponent(query);
-          if (mapLink) mapLink.dataset.href = 'https://map.naver.com/v5/search/' + encoded;
-          if (msg1) msg1.textContent = '선택하신 감정에 맞는 전문가를 찾아보실 수 있어요.';
-          if (msg2) msg2.textContent = '네이버 지도에서 검색 결과를 확인해보세요. (새 탭에서 열림)';
-          if (mapContainer) mapContainer.style.display = 'block';
-        } catch (e) {
-          // 실패해도 페이지 동작에는 영향 없음
-          if (mapContainer) mapContainer.style.display = 'none';
-        }
-      };
-    })();
-    </script>
-
-    <script>
-    (function(){
       function showToast(text, duration = 3500) {
         if (!text) return;
         const id = 'custom-toast';

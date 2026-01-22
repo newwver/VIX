@@ -1,48 +1,51 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ===============================
-    // 1. GOOGLE MAP LINK (GLOBAL)
+    // 1. MAP LINKS
     // ===============================
-    (function () {
-      const mapContainer = document.getElementById('naver-map-link-container');
-      const mapLink = document.getElementById('naver-map-link');
-      const msg1 = mapContainer?.querySelector('[data-key="naverMapLinkMessage"]');
-      const msg2 = mapContainer?.querySelector('[data-key="naverMapLinkMessage2"]');
-  
-      const EMOTION_TO_QUERY = {
-        empty: 'psychological counseling center',
-        powerless: 'mental health clinic',
-        anxious: 'psychiatrist',
-        sadness: 'mental health clinic'
-      };
-  
-      window.showGoogleMapLink = function (emotionKey) {
-        try {
-          const query = EMOTION_TO_QUERY[emotionKey] || 'mental health clinic';
-          const encoded = encodeURIComponent(query);
-  
-          if (mapLink) {
-            mapLink.dataset.href = `https://www.google.com/maps/search/${encoded}`;
-            mapLink.target = '_blank';
-            mapLink.rel = 'noopener noreferrer';
-          }
-  
-          if (msg1) {
-            msg1.textContent =
-              'You can find nearby mental health professionals based on your feelings.';
-          }
-  
-          if (msg2) {
-            msg2.textContent =
-              'Search results will open in Google Maps (new tab).';
-          }
-  
-          if (mapContainer) mapContainer.style.display = 'block';
-        } catch {
-          if (mapContainer) mapContainer.style.display = 'none';
+    const mapLink = document.getElementById('naver-map-link');
+    const mapLinkText = mapLink?.querySelector('span');
+
+    const showNaverMapLink = (emotionKey) => {
+        const queries = {
+            empty: '정신건강복지센터',
+            powerless: '정신건강복지센터',
+            anxious: '정신건강복지센터',
+            sadness: '정신건강복지센터'
+        };
+        const query = queries[emotionKey] || '정신건강복지센터';
+        if (mapLink) {
+            mapLink.dataset.href = `https://map.naver.com/v5/search/${encodeURIComponent(query)}`;
         }
-      };
-    })();
-  
+        if(mapLinkText) {
+            mapLinkText.textContent = getTranslation('findExpertsNaverMap');
+        }
+    };
+
+    const showGoogleMapLink = (emotionKey) => {
+        const queries = {
+            empty: 'mental health and welfare center',
+            powerless: 'mental health and welfare center',
+            anxious: 'mental health and welfare center',
+            sadness: 'mental health and welfare center'
+        };
+        const query = queries[emotionKey] || 'mental health and welfare center';
+        if (mapLink) {
+            mapLink.dataset.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+        }
+         if(mapLinkText) {
+            mapLinkText.textContent = getTranslation('findExpertsGoogleMap');
+        }
+    };
+    
+    const showMapLink = (emotion) => {
+        if (currentLang === 'ko') {
+            showNaverMapLink(emotion);
+        } else {
+            showGoogleMapLink(emotion);
+        }
+    };
+
+
     // ===============================
     // 2. TOAST & OVERLAY
     // ===============================
@@ -307,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   
   
-        window.showGoogleMapLink?.(emotion);
+        showMapLink(emotion);
   
       }, 50);
   

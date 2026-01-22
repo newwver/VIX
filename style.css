@@ -682,27 +682,9 @@ body {
     background-color: #c9c1ac; /* Slightly darker grey */
 }
 
-/* Ensure map container has its own styling */
-#map-container {
-    background-color: #e9e2d1; /* Placeholder background */
-}
 
-/* Style for clinic list items */
-#clinic-list ul {
-    list-style: none;
-    padding: 0;
-}
-
-#clinic-list li {
-    margin-bottom: 8px;
-}
-
-#clinic-list li a {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 500;
-}
-
-#clinic-list li a:hover {
-    text-decoration: underline;
+@media (max-height: 750px) {
+    .result-ticket {
+        margin-top: 55px;
+    }
 }
