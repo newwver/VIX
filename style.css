@@ -252,7 +252,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0; /* Remove default gap */
-    padding: 0 20px 20px;
+    padding: 0 40px 10px;
 }
 
 .wisdom-intro {
@@ -268,7 +268,7 @@ body {
     font-weight: 600;
     line-height: 1.5;
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     color: #2c2c2c;
     word-break: keep-all;
     font-family: var(--font-family-serif);
@@ -287,7 +287,7 @@ body {
     font-size: 1.05rem;
     line-height: 1.8;
     color: #2c2c2c;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     /* padding: 0 10px;  */
     word-break: keep-all;
 }
@@ -329,7 +329,8 @@ body {
 }
 
 #report-btn {    
-    color: #0326a1;
+    color: #fff;
+    background: #b89231;
 }
 
 .map-btn {
@@ -457,7 +458,7 @@ body {
 
     .result-ticket {
         max-width: 600px;
-        max-height: 80vh;
+        max-height: 85vh;
         overflow-y: auto;
         margin: auto;
     }
